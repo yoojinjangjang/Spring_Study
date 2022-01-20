@@ -19,7 +19,7 @@ public class WIshRepositoryTest {
         wishList.setTitle("title");
         wishList.setCategory("category");
         wishList.setAddress("address");
-        wishList.setReadAddress("readAddress");
+        wishList.setRoadAddress("readAddress");
         wishList.setHomePageLink("");
         wishList.setImageLink("");
         wishList.setVisit(false);
@@ -66,7 +66,7 @@ public class WIshRepositoryTest {
         var saveEntity = wishListRepository.save(expected);
 
         Assertions.assertEquals("update Test", saveEntity.getTitle());
-        Assertions.assertEquals(1, wishListRepository.listAll().size());
+        Assertions.assertEquals(1, wishListRepository.findAll().size());
 
 
 
@@ -82,7 +82,7 @@ public class WIshRepositoryTest {
 
         wishListRepository.deleteById(1);
 
-        int count = wishListRepository.listAll().size();
+        int count = wishListRepository.findAll().size();
         Assertions.assertEquals(0, count);
 
 
@@ -98,7 +98,7 @@ public class WIshRepositoryTest {
         var wishListEntity3 = create();
         wishListRepository.save(wishListEntity3);
 
-        int count = wishListRepository.listAll().size();
+        int count = wishListRepository.findAll().size();
         Assertions.assertEquals(3, count);
     }
 
