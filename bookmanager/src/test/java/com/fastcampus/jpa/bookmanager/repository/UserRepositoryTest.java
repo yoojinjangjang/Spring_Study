@@ -1,5 +1,6 @@
 package com.fastcampus.jpa.bookmanager.repository;
 
+import com.fastcampus.jpa.bookmanager.domain.Gender;
 import com.fastcampus.jpa.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -277,15 +278,33 @@ class UserRepositoryTest {
 
     }
 
+    //---------------------------------------------------------------------------//
+    @Test
+    void insertandUpdateTest(){
+        User user = new User();
+        user.setName("martin");
+        user.setEmail("martin@google.com");
+        userRepository.save(user); // insert 문 동작
 
-    //코드의 가독성을 위해 다른 클래스를 선언하여 사용할 수 있다.
-    private Sort getSort(){
-        return Sort.by(Sort.Order.desc("id"));
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrrrtin");
+        userRepository.save(user2); //update 문 동작
+
+        userRepository.findAll().forEach(System.out::println);
+
     }
 
+    @Test
+    void enumTest(){
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
 
+        userRepository.findAll().forEach(System.out::println);
 
+        System.out.println(userRepository.findRowRecord().get("gender")); //gender 필드 에
 
+    }
 
 
 

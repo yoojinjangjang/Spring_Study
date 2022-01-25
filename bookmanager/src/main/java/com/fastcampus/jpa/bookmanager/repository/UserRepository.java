@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 
 //entity 객체를 저장하고 조회하기 위한 클래스 - repository
@@ -102,4 +104,10 @@ public interface UserRepository extends JpaRepository<User,Long> { //jpareposito
     //paging 처리
     Page<User> findByName(String name, Pageable pageable); // page: slice를 상속 받는다. 전체 페이지에 대한 정보 , Slice : 부분집합에 대한 각각의 정보
     //Pageable : page 요청을 하는 값
+
+
+
+    //-------------------------------------------------------------------------------------------------------------------------//
+    @Query(value = "select * from user limit 1;",nativeQuery = true)
+    Map<String,Object> findRowRecord();
 }
