@@ -1,11 +1,11 @@
 package com.fastcampus.jpa.bookmanager.domain;
 
 import lombok.*;
+import org.springframework.jdbc.datasource.AbstractDriverBasedDataSource;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 //@Getter
 //@Setter
@@ -27,6 +27,11 @@ public class User{ //entity 에는 primary Key 가 꼭 필요하다.
     private String email;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;  //생성 시간,수정 시간 - jap domain 객체 항상 포함되어있다.
+/*
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Address> address;
+*/
 
 
 

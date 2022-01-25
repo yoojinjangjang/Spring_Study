@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -203,10 +204,86 @@ class UserRepositoryTest {
 
         userRepository.save(user); //update에서도 해당 entity 가 존재하는지 select가 먼저 실행된다 . 해당 id가 있을경우 update가 실행된다.
 
-        userRepository.findAll().forEach(System.out::println
-        );
+        userRepository.findAll().forEach(System.out::println);
 
     }
+
+    @Test
+    void select(){
+/*
+        System.out.println(userRepository.findByName("younseok")); //에러가 난다. unique 객체를 반환하지 않는다. --> list로 반환한다. where조건이 추가되었다.
+
+
+        System.out.println("findByEmail: " + userRepository.findByEmail("yoojin@naver.com"));
+        System.out.println("getByEmail: " + userRepository.getByEmail("yoojin@naver.com"));
+        System.out.println("readByEmail: " + userRepository.readByEmail("yoojin@naver.com"));
+        System.out.println("queryByEmail: " + userRepository.queryByEmail("yoojin@naver.com"));
+        System.out.println("searchByEmail: " + userRepository.searchByEmail("yoojin@naver.com"));
+        System.out.println("streamByEmail: " + userRepository.streamByEmail("yoojin@naver.com"));
+        System.out.println("findUserByEmail: " + userRepository.findUserByEmail("yoojin@naver.com")); //동일 쿼리와 동일 값 나온다. --> 이중 코드가독성 가장 잘어울리는 것으로 골라서 사용한다.
+
+
+        System.out.println("findSomethingByEmail" +  userRepository.findSomethingByName("yoojin"));
+
+        System.out.println("findFirst1Byname" + userRepository.findFirst1Byname("yoojin"));
+        System.out.println("findTop1Byname" + userRepository.findTop1Byname("yoojin"));
+        System.out.println("findLast1ByName" + userRepository.findLast1ByName("yoojin"));   */
+
+        //--------------------------------------------------------------------------//
+
+    /*    System.out.println("findByEmailandName: " + userRepository.findByEmailAndName("yoojin@naver.com","yoojin"));
+        System.out.println("findByEmailorName: " + userRepository.findByEmailOrName("yoojin@naver.com","yoojin"));
+        System.out.println("findByCreatedAtAfter: " + userRepository.findByCreateAtAfter(LocalDateTime.now().minusDays(1L))); //해당 날짜 이후의 값이 나옴(큰값이 나온다.)
+        System.out.println("findByCreatedAtBefore: " + userRepository.findByCreateAtBefore(LocalDateTime.now().minusDays(1L))); //해당 날짜 이전의 값이 나옴(작은값이 나온다.)
+        System.out.println("findByIdAfter:" + userRepository.findByIdAfter(4L)); //숫자값일경우 해당 값보다 큰값이 출력된다.
+        System.out.println("findByCreateAtGreaterThan: " + userRepository.findByCreateAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdGreaterThanEquals: " + userRepository.findByIdGreaterThanEqual(4L));
+        System.out.println("findByIdBetween: " + userRepository.findByIdBetween(2L,5L));    */
+
+        //----------------------------------------------------------------------------//
+
+        System.out.println("findByIdisNotNull: "  + userRepository.findByIdIsNotNull());
+        //System.out.println("findByIdIsNotEmpty: "  + userRepository.findByAddressIsNotEmpty());
+        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("younseok","yoojin"))); //일반적으로 다른 쿼리의 결과값을 다시 쿼리에 넣기 위해 사용한다.
+        System.out.println("findByNameNotIN: "  + userRepository.findByNameNotIn(Lists.newArrayList("younseok","yoojin")));
+        System.out.println("findByNameStartingWith: " + userRepository.findByNameStartingWith("yoo"));
+        System.out.println("findByNameEndingWith: " + userRepository.findByNameEndingWith("in"));
+        System.out.println("findByNameContaining " + userRepository.findByNameContaining("oo"));
+        System.out.println("findByNameLike: " + userRepository.findByNameLike("%oo%"));
+
+
+        //--------------------------------------------------------------------------------//
+
+
+    }
+
+    @Test
+    void pagingandSortingTest(){
+        System.out.println("findTop1ByNaqme : "  + userRepository.findTop1Byname("yoojin"));
+        System.out.println("findLast1ByNaqme : "  + userRepository.findLast1ByName("yoojin"));
+        System.out.println("findTop1ByNameOrderByIdDesc : "  + userRepository.findTop1ByNameOrderByIdDesc("yoojin"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("yoojin"));
+        System.out.println("findFirstByName: "  + userRepository.findFirstByName("yoojin",Sort.by(Sort.Order.desc("id"),Sort.Order.asc("email")))); //여러개 정렬기준 넣기
+        //정렬기준이 여러개일경우 위의 방법을 사용하기 (메소드의 이름이 너무 길어지기 때문에 - OrderBy) ,메소드 하나로 여러가지 정렬기준을 넣어 사용할 수 있다. - 자유도 , 가독성 측면에서 효율적이다.
+
+
+
+        //굉장히 많은 경우 리스트 형식으로 조회를 한다. 그러므로 page 기능을 알아야 한다. .jpa에서 많은 기능을 제공한다.
+        System.out.println("findByNamewithPaging: " + userRepository.findByName("yoojin",PageRequest.of(0,1)).getContent()); //pageable객체로는 pageReuqest객체의 of 메소드를 사용한다.
+
+
+
+
+
+    }
+
+
+    //코드의 가독성을 위해 다른 클래스를 선언하여 사용할 수 있다.
+    private Sort getSort(){
+        return Sort.by(Sort.Order.desc("id"));
+    }
+
+
 
 
 
