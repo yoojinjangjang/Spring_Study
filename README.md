@@ -12,7 +12,7 @@ link: [restaurant](https://github.com/yoojinjangjang/Spring_Study/tree/master/re
 
 ## 2. JPA study
 
-link: [bookmanager](https://github.com/yoojinjangjang/Spring_Study/tree/master/bookmanager)
+link: [bookmanager](https://github.com/yoojinjangjang/Spring_Study/tree/master/bookmanager)  
 velog :
 
 - [ch01](https://velog.io/@yoojinjangjang/P4-1-Ch-01.-%ED%95%99%EC%8A%B5-%EC%A0%84-%EA%B8%B0%EC%B4%88-%EC%82%AC%ED%95%AD)

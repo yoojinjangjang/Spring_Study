@@ -23,6 +23,8 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistroyRepository userHistroyRepository;
 
     @Test
     void save() {
@@ -307,7 +309,61 @@ class UserRepositoryTest {
     }
 
 
+    @Test
+    void listenerTest(){
+        User user = new User();
+        user.setEmail("martin2@google.com");
+        user.setName("martin");
+        userRepository.save(user); //insert 가 발생
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrrrtin");
+        userRepository.save(user2); // update 가 발생
+
+        userRepository.deleteById(4L); //remove 가 발생
+
+    }
 
 
+    @Test
+    void prePersistTest(){
+        User user = new User();
+        user.setEmail("martin2@google.com");
+        user.setName("martin");
+   //     user.setCreateAt(LocalDateTime.now());
+   //     user.setUpdateAt(LocalDateTime.now()); //이런 값들을 계속 반복해주는 것은 법칙에 어긋날뿐만아니라 개발자의 실수로 오류가 발생할 수 있는 요소가 된다.
+        // 실제 저장 or 수정 시간을 알수 없게 된다. 그래서 entity에 prepersist와 preUpdate를 설정을 해서 메소드가 실행 전 자동으로 해당 값을 set하는 방식을 사용한다.
 
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("martin2@google.com"));
+
+    }
+
+    @Test
+    void preUpdateTest(){
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        System.out.println("as-is : " + user);
+
+        user.setEmail("update@google.com");
+        userRepository.save(user); //update 실행 --> updateAt 자동 수정
+
+        System.out.println("to-be : " + userRepository.findAll().get(0)); //실제 db에 들어있는 값을 재호출
+    }
+
+
+    @Test
+    void userHistoryTest(){
+        User user = new User();
+        user.setEmail("martinNew@google.com");
+        user.setName("marrtinNew");
+        userRepository.save(user); // insert가 수행된다.
+
+        user.setName("martinNewNew");
+        userRepository.save(user); //update 수행 --> preUpdate 부분에서 에러가 발생한다.(UserEntityListener)
+
+        userHistroyRepository.findAll().forEach(System.out::println);
+
+
+    }
 }
