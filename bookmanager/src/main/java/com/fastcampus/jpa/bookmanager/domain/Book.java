@@ -11,40 +11,57 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor //entity 객체는 기본적으로 기본생성자가 필요하다.
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-//@EntityListeners(value = AuditingEntityListener.class)
 public class Book extends BaseEntity { //pk 필요
     @Id
-    @GeneratedValue //생성된 값 그대로 가져와서 사용한다.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //생성된 값 그대로 가져와서 사용한다. 기본값 : AUTO -> H2 DB 의 기본 값은 sequence이다. id값 생성시 매번 hibernate sequence 를 공용으로 사용한다.
     private Long id;
 
     private String name;
 
-    private String author;
+    private String category;
 
-  /*  @CreatedDate
-    private LocalDateTime createAt;
+    //private Long authorId;
 
-    @LastModifiedDate
-    private LocalDateTime updateAt;
-*/
-/*
-    @PrePersist
-    public void prePersist(){
-        this.createAt = LocalDateTime.now();
-        this.updateAt = LocalDateTime.now();
-    }
+   // @Column(name="publisher_id")
+ //   private Long publisherId;
 
-    @PreUpdate
-    public void preUpdate(){
-        this.updateAt = LocalDateTime.now();
+    @OneToOne(mappedBy = "book")
+    @ToString.Exclude
+    private BookReviewInfo bookReviewInfo;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="book_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToOne
+    @ToString.Exclude
+    private Publisher publisher;
+
+
+/*    @ManyToMany
+    @ToString.Exclude
+    private List<Author> authors = new ArrayList<>();*/
+
+    @OneToMany
+    @JoinColumn(name="book_id")
+    private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
+
+
+
+/*    public void addAuthor(Author author){
+        this.authors.add(author);
     }*/
-
-    //createAt  과 updateAt 는 많은 객체에서 지정을 해줘야하므로 일일히 지정하는것은 효율적이지 않다. 이럴때 이용하는 것이 엔티티 리스너를 지정해서 활용하는 방법이다.
-
+    public void addBookAndAuthors(BookAndAuthor... bookAndAuthors){
+    Collections.addAll(this.bookAndAuthors, bookAndAuthors);
+    }
 }

@@ -19,4 +19,5 @@ velog :
 - [ch02](https://velog.io/@yoojinjangjang/P4-1-Ch-02.-SpringData-JPA-%EA%B8%B0%EC%B4%88)
 - [ch03](https://velog.io/@yoojinjangjang/P4-1-Ch-03.-QueryMethod-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
 - [ch04&5](https://velog.io/@yoojinjangjang/P4-1-Ch-0405.-Entity-%EA%B8%B0%EB%B3%B8-Listener-%ED%99%9C%EC%9A%A9)
+- [ch06](https://velog.io/@yoojinjangjang/P4-1-Ch-06.-%EC%97%B0%EA%B4%80-%EA%B4%80%EA%B3%84)  
   jpa 관련 실습 자료를 모아두었으며, chapter별로 학습한 내용을 commit 하였다.

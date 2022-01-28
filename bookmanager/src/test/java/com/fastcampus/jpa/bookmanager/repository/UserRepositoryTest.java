@@ -2,6 +2,7 @@ package com.fastcampus.jpa.bookmanager.repository;
 
 import com.fastcampus.jpa.bookmanager.domain.Gender;
 import com.fastcampus.jpa.bookmanager.domain.User;
+import com.fastcampus.jpa.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -296,7 +297,7 @@ class UserRepositoryTest {
 
     }
 
-    @Test
+   /* @Test
     void enumTest(){
         User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
         user.setGender(Gender.MALE);
@@ -306,7 +307,7 @@ class UserRepositoryTest {
 
         System.out.println(userRepository.findRowRecord().get("gender")); //gender 필드 에
 
-    }
+    }*/
 
 
     @Test
@@ -363,6 +364,37 @@ class UserRepositoryTest {
         userRepository.save(user); //update 수행 --> preUpdate 부분에서 에러가 발생한다.(UserEntityListener)
 
         userHistroyRepository.findAll().forEach(System.out::println);
+
+
+    }
+
+
+    @Test
+    void userRelationTest(){ //user 와 user history 의 관계 ( 1대 N )
+        User user = new User();
+        user.setName("pobi");
+        user.setEmail("pobi@google.com");
+        user.setGender(Gender.FEMALE);
+
+        userRepository.save(user); //insert 시 history 에 자동으로 user수정 정보 저장된다.
+        user.setName("ForBi");
+        userRepository.save(user); // update 시 위 와 동일
+        user.setEmail("ForBi@google.com");
+        userRepository.save(user); //update
+
+     //   userHistroyRepository.findAll().forEach(System.out::println);
+
+
+//        List<UserHistory> result = userHistroyRepository.findByUserId(userRepository.findByEmail("ForBi@google.com").getId());
+  //      result.forEach(System.out::println);
+
+        List<UserHistory> result = userRepository.findByEmail("ForBi@google.com").getUserHistories(); // 관계 맺은 entity를 자동으로 불러와 준다.
+
+
+        result.forEach(System.out::println);
+
+        User result2 = userHistroyRepository.findById(2L).orElseThrow(RuntimeException::new).getUser();
+        System.out.println(result2);
 
 
     }

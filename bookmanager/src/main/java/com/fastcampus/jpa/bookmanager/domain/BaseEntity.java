@@ -1,5 +1,6 @@
 package com.fastcampus.jpa.bookmanager.domain;
 
+import com.fastcampus.jpa.bookmanager.domain.listener.Auditable;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 // 이 클래스를 entity들이 상속을 받으면 여러번 createAt과 updateAt필드에 대한 설정을 해줄 필요가 없게 된다.
 // 또한, 밑의 entityListeners 설정도 해주지 않아도 여기서 모든게 수행된다.
 @EntityListeners(value = AuditingEntityListener.class)
-public class BaseEntity {
+public class BaseEntity implements Auditable {
     @CreatedDate
     private LocalDateTime createAt;
     @LastModifiedDate
