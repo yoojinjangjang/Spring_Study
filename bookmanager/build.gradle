@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web' //spring mvc
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2' //db 의존성
+    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test' //test 기본 포함
 }

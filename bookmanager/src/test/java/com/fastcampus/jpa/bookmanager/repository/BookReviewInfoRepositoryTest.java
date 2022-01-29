@@ -5,10 +5,12 @@ import com.fastcampus.jpa.bookmanager.domain.BookReviewInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class BookReviewInfoRepositoryTest {
 
     @Autowired
@@ -23,6 +25,7 @@ class BookReviewInfoRepositoryTest {
         //bookReviewInfo.setBookId(1L);
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
+        bookReviewInfo.setBook(givenBook());
 
         bookReviewInfoRepository.save(bookReviewInfo); //insert
 
@@ -44,13 +47,13 @@ class BookReviewInfoRepositoryTest {
                         .getBook().getId()
         ).orElseThrow(RuntimeException::new);*/
 
-        Book result = bookReviewInfoRepository.findById(1L).orElseThrow(RuntimeException::new).getBook(); // 1대1 관계의 book을 바로 가져온다.
+        Book result = bookReviewInfoRepository.findById(2L).orElseThrow(RuntimeException::new).getBook(); // 1대1 관계의 book을 바로 가져온다.
         // 기존 -> bookreviewinfo 에서 book id 를 가지고 book reposiotory 에서 book 을 가져왔다.
         // 현재 -> bookreviewinfo 에서 1대1관계의 book 을 바로 가져온다.
 
         System.out.println(">>>" + result);
-
-        BookReviewInfo result2 = bookRepository.findById(1L).orElseThrow(RuntimeException::new).getBookReviewInfo(); //서로 관계를 맺은 entity를 가져올수 있다.
+        System.out.println(">>> " + bookRepository.findAll());
+        BookReviewInfo result2 = bookRepository.findById(2L).orElseThrow(RuntimeException::new).getBookReviewInfo(); //서로 관계를 맺은 entity를 가져올수 있다.
         System.out.println(">>> " + result2);
     }
 

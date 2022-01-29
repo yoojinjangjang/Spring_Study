@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,14 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
+@Transactional
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserHistroyRepository userHistroyRepository;
-
+/*
     @Test
     void save() {
        // ** save 메서드 **
@@ -214,7 +215,7 @@ class UserRepositoryTest {
 
     @Test
     void select(){
-/*
+
         System.out.println(userRepository.findByName("younseok")); //에러가 난다. unique 객체를 반환하지 않는다. --> list로 반환한다. where조건이 추가되었다.
 
 
@@ -231,18 +232,18 @@ class UserRepositoryTest {
 
         System.out.println("findFirst1Byname" + userRepository.findFirst1Byname("yoojin"));
         System.out.println("findTop1Byname" + userRepository.findTop1Byname("yoojin"));
-        System.out.println("findLast1ByName" + userRepository.findLast1ByName("yoojin"));   */
+        System.out.println("findLast1ByName" + userRepository.findLast1ByName("yoojin"));
 
         //--------------------------------------------------------------------------//
 
-    /*    System.out.println("findByEmailandName: " + userRepository.findByEmailAndName("yoojin@naver.com","yoojin"));
+       System.out.println("findByEmailandName: " + userRepository.findByEmailAndName("yoojin@naver.com","yoojin"));
         System.out.println("findByEmailorName: " + userRepository.findByEmailOrName("yoojin@naver.com","yoojin"));
         System.out.println("findByCreatedAtAfter: " + userRepository.findByCreateAtAfter(LocalDateTime.now().minusDays(1L))); //해당 날짜 이후의 값이 나옴(큰값이 나온다.)
         System.out.println("findByCreatedAtBefore: " + userRepository.findByCreateAtBefore(LocalDateTime.now().minusDays(1L))); //해당 날짜 이전의 값이 나옴(작은값이 나온다.)
         System.out.println("findByIdAfter:" + userRepository.findByIdAfter(4L)); //숫자값일경우 해당 값보다 큰값이 출력된다.
         System.out.println("findByCreateAtGreaterThan: " + userRepository.findByCreateAtGreaterThan(LocalDateTime.now().minusDays(1L)));
         System.out.println("findByIdGreaterThanEquals: " + userRepository.findByIdGreaterThanEqual(4L));
-        System.out.println("findByIdBetween: " + userRepository.findByIdBetween(2L,5L));    */
+        System.out.println("findByIdBetween: " + userRepository.findByIdBetween(2L,5L));
 
         //----------------------------------------------------------------------------//
 
@@ -275,13 +276,9 @@ class UserRepositoryTest {
         //굉장히 많은 경우 리스트 형식으로 조회를 한다. 그러므로 page 기능을 알아야 한다. .jpa에서 많은 기능을 제공한다.
         System.out.println("findByNamewithPaging: " + userRepository.findByName("yoojin",PageRequest.of(0,1)).getContent()); //pageable객체로는 pageReuqest객체의 of 메소드를 사용한다.
 
-
-
-
-
     }
 
-    //---------------------------------------------------------------------------//
+
     @Test
     void insertandUpdateTest(){
         User user = new User();
@@ -295,9 +292,9 @@ class UserRepositoryTest {
 
         userRepository.findAll().forEach(System.out::println);
 
-    }
+    }        */
 
-   /* @Test
+    @Test
     void enumTest(){
         User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
         user.setGender(Gender.MALE);
@@ -307,7 +304,8 @@ class UserRepositoryTest {
 
         System.out.println(userRepository.findRowRecord().get("gender")); //gender 필드 에
 
-    }*/
+    }
+
 
 
     @Test
@@ -382,10 +380,10 @@ class UserRepositoryTest {
         user.setEmail("ForBi@google.com");
         userRepository.save(user); //update
 
-     //   userHistroyRepository.findAll().forEach(System.out::println);
+       userHistroyRepository.findAll().forEach(System.out::println);
 
 
-//        List<UserHistory> result = userHistroyRepository.findByUserId(userRepository.findByEmail("ForBi@google.com").getId());
+  //      List<UserHistory> result = userHistroyRepository.findByUserId(userRepository.findByEmail("ForBi@google.com").getId());
   //      result.forEach(System.out::println);
 
         List<UserHistory> result = userRepository.findByEmail("ForBi@google.com").getUserHistories(); // 관계 맺은 entity를 자동으로 불러와 준다.
@@ -393,9 +391,8 @@ class UserRepositoryTest {
 
         result.forEach(System.out::println);
 
-        User result2 = userHistroyRepository.findById(2L).orElseThrow(RuntimeException::new).getUser();
+        User result2 = userHistroyRepository.findById(5L).orElseThrow(RuntimeException::new).getUser();
         System.out.println(result2);
-
 
     }
 }
