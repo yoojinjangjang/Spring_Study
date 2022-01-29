@@ -15,9 +15,10 @@ link: [restaurant](https://github.com/yoojinjangjang/Spring_Study/tree/master/re
 link: [bookmanager](https://github.com/yoojinjangjang/Spring_Study/tree/master/bookmanager)  
 velog :
 
-- [ch01](https://velog.io/@yoojinjangjang/P4-1-Ch-01.-%ED%95%99%EC%8A%B5-%EC%A0%84-%EA%B8%B0%EC%B4%88-%EC%82%AC%ED%95%AD)
-- [ch02](https://velog.io/@yoojinjangjang/P4-1-Ch-02.-SpringData-JPA-%EA%B8%B0%EC%B4%88)
-- [ch03](https://velog.io/@yoojinjangjang/P4-1-Ch-03.-QueryMethod-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
-- [ch04&5](https://velog.io/@yoojinjangjang/P4-1-Ch-0405.-Entity-%EA%B8%B0%EB%B3%B8-Listener-%ED%99%9C%EC%9A%A9)
-- [ch06](https://velog.io/@yoojinjangjang/P4-1-Ch-06.-%EC%97%B0%EA%B4%80-%EA%B4%80%EA%B3%84)  
+- [ch01](https://velog.io/@yoojinjangjang/P4-1-Ch-01.-%ED%95%99%EC%8A%B5-%EC%A0%84-%EA%B8%B0%EC%B4%88-%EC%82%AC%ED%95%AD) 학습 전 기초 사항
+- [ch02](https://velog.io/@yoojinjangjang/P4-1-Ch-02.-SpringData-JPA-%EA%B8%B0%EC%B4%88) Spring Data Jpa 기초
+- [ch03](https://velog.io/@yoojinjangjang/P4-1-Ch-03.-QueryMethod-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0) Query Method
+- [ch04&5](https://velog.io/@yoojinjangjang/P4-1-Ch-0405.-Entity-%EA%B8%B0%EB%B3%B8-Listener-%ED%99%9C%EC%9A%A9) Entity 기본, Listener 활용
+- [ch06](https://velog.io/@yoojinjangjang/P4-1-Ch-06.-%EC%97%B0%EA%B4%80-%EA%B4%80%EA%B3%84) 연관 관계
+- [ch07](https://velog.io/@yoojinjangjang/P4-1-Ch-07.-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8) 영속성 테스트  
   jpa 관련 실습 자료를 모아두었으며, chapter별로 학습한 내용을 commit 하였다.
