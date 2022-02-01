@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -48,19 +49,14 @@ public class Book extends BaseEntity { //pk 필요
     private Publisher publisher;
 
 
-/*    @ManyToMany
-    @ToString.Exclude
-    private List<Author> authors = new ArrayList<>();*/
 
     @OneToMany
     @JoinColumn(name="book_id")
+    @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 
 
 
-/*    public void addAuthor(Author author){
-        this.authors.add(author);
-    }*/
     public void addBookAndAuthors(BookAndAuthor... bookAndAuthors){
     Collections.addAll(this.bookAndAuthors, bookAndAuthors);
     }

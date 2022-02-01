@@ -29,6 +29,7 @@ public class Author extends BaseEntity{
 
     @OneToMany
     @JoinColumn(name="author_id")
+    @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 
 /*    public void addBook(Book book){
