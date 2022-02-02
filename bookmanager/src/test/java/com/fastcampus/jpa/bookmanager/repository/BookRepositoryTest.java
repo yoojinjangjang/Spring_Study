@@ -4,16 +4,23 @@ import com.fastcampus.jpa.bookmanager.domain.Book;
 import com.fastcampus.jpa.bookmanager.domain.Publisher;
 import com.fastcampus.jpa.bookmanager.domain.Review;
 import com.fastcampus.jpa.bookmanager.domain.User;
+import com.fastcampus.jpa.bookmanager.repository.dto.BookStatus;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.PostUpdate;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
+
 class BookRepositoryTest {
 
     @Autowired
@@ -81,5 +88,141 @@ class BookRepositoryTest {
         return publisherRepository.save(publisher);
     }
 
+
+    @Test
+    void bookCascadeTest(){
+        Book book = new Book();
+        book.setName("JPA TEST PACKAGE");
+
+
+        Publisher publisher = new Publisher();
+        publisher.setName("YOOJIN");
+
+
+        book.setPublisher(publisher); //영속성 관리되지 않고 저장시 연관관계 맺을수없다.
+        bookRepository.save(book);
+
+        System.out.println("books : " + bookRepository.findAll());
+        System.out.println("publishers: : "+ publisherRepository.findAll());
+
+        Book book1 = bookRepository.findById(1L).get();
+        book1.getPublisher().setName("not yoojin");
+        bookRepository.save(book1);
+
+        System.out.println("publisher : " + publisherRepository.findAll());
+
+    //    Book book2 = bookRepository.findById(1L).get();
+      //  bookRepository.delete(book2);
+
+
+        Book book3 = bookRepository.findById(1L).get();
+        book3.setPublisher(null);
+
+        bookRepository.save(book3);
+
+        System.out.println("books : " + bookRepository.findAll());
+        System.out.println("publisher:  " + publisherRepository.findAll());
+        System.out.println("book3-Publisher: " + bookRepository.findById(1L).get().getPublisher());
+
+    }
+
+    @Test
+    void bookRemoveCascadeTest(){
+        Book book1 = bookRepository.findById(1L).get();
+        bookRepository.delete(book1);
+
+        bookRepository.findAll().forEach(book ->
+                System.out.println(book.getPublisher()));
+
+
+
+        System.out.println(bookRepository.findAll());
+        System.out.println(publisherRepository.findAll());
+    }
+
+    @Test
+    void softDeleteTest(){
+       bookRepository.findAll().forEach(System.out::println);
+        bookRepository.findByCategoryIsNull().forEach(System.out::println);
+        //bookRepository.findALlByDeletedFalse().forEach(System.out::println);
+    }
+
+
+
+    @Test
+    void queryTest(){
+        bookRepository.findAll().forEach(System.out::println);
+
+        System.out.println("findByCategoryIsNullAndNameEqualsAndCreateAtGreaterThanEqualAndUpdateAtGreaterThanEqual : " +
+                bookRepository.findByCategoryIsNullAndNameEqualsAndCreateAtGreaterThanEqualAndUpdateAtGreaterThanEqual(
+                        "JPA Test",
+                        LocalDateTime.now().minusDays(1L),
+                        LocalDateTime.now().minusDays(1L)
+                ));
+
+        System.out.println("findByNameRecently : " + bookRepository.findByNameRecently(
+                "JPA test",
+                LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().minusDays(1L)
+        ));
+
+        System.out.println(bookRepository.findBookNameAndCategory());
+
+        bookRepository.findBookNameAndCategory().forEach(b -> {
+            System.out.println(b.getName()+" : " + b.getCategory());
+        });
+
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(0,1)).forEach(book ->{
+            System.out.println(book.getName() + " : " + book.getCategory());
+        });
+
+
+    }
+
+
+    @Test
+    void nativeQuery(){
+/*        bookRepository.findAll().forEach(System.out::println);
+        System.out.println("-----------------------------------");
+        bookRepository.findAllCustom().forEach(System.out::println);*/
+
+
+        List<Book> books = bookRepository.findAll();
+
+        for(Book book : books){
+            book.setCategory("IT전문서");
+
+        }
+        bookRepository.saveAll(books);
+
+        System.out.println(bookRepository.findAll());
+
+
+        System.out.println(bookRepository.updateCategories());
+        bookRepository.findAllCustom().forEach(System.out::println);
+
+
+        System.out.println(bookRepository.showTables());
+    }
+
+    @Test
+    void converterTest(){
+        bookRepository.findAll().forEach(System.out::println);
+
+
+        Book book = new Book();
+        book.setName("Converter Test");
+        book.setStatus(new BookStatus(200));
+
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRowRecord().values());
+
+
+        bookRepository.findAll().forEach(System.out::println);
+
+
+    }
 
 }
