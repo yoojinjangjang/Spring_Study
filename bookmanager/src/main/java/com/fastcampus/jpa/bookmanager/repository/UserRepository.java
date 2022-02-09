@@ -110,4 +110,8 @@ public interface UserRepository extends JpaRepository<User,Long> { //jpareposito
     //-------------------------------------------------------------------------------------------------------------------------//
     @Query(value = "select * from user limit 1;",nativeQuery = true)
     Map<String,Object> findRowRecord();
+
+
+    @Query(value = "select * from user",nativeQuery = true)
+    List<Map<String ,Object>> findAllRowRecord();
 }

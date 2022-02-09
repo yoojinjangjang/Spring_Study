@@ -27,8 +27,37 @@ public class UserHistory extends BaseEntity  { //history entity이기 떄문에 
 
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
+
+    @Embedded
+    @AttributeOverrides(
+            {
+                    @AttributeOverride(name = "city",column = @Column(name="home_city")),
+                    @AttributeOverride(name = "district",column = @Column(name="home_district")),
+                    @AttributeOverride(name = "detail",column = @Column(name = "home_address_detail")),
+                    @AttributeOverride(name = "zipCode",column= @Column(name = "home_zip_code"))
+            }
+    )
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides(
+            {
+                    @AttributeOverride(name = "city",column = @Column(name="company_city")),
+                    @AttributeOverride(name = "district",column = @Column(name="company_district")),
+                    @AttributeOverride(name = "detail",column = @Column(name = "company_address_detail")),
+                    @AttributeOverride(name = "zipCode",column= @Column(name = "company_zip_code"))
+            }
+    )
+    private Address companyAddress;
+
     @ManyToOne // N대1관계 - 자신이 앞으로 오게 ( userhistory 가 many임 )
+    @ToString.Exclude
     private User user; // userhistory  에서 관계를 맺은 user를 가지고 온다.
+
+
+
 
 
 

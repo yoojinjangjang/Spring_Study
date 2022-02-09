@@ -1,5 +1,6 @@
 package com.fastcampus.jpa.bookmanager.repository;
 
+import com.fastcampus.jpa.bookmanager.domain.Address;
 import com.fastcampus.jpa.bookmanager.domain.Gender;
 import com.fastcampus.jpa.bookmanager.domain.User;
 import com.fastcampus.jpa.bookmanager.domain.UserHistory;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,9 @@ class UserRepositoryTest {
     private UserRepository userRepository;
     @Autowired
     private UserHistroyRepository userHistroyRepository;
-/*
+    @Autowired
+    private EntityManager entityManager;
+    /*
     @Test
     void save() {
        // ** save 메서드 **
@@ -395,4 +399,43 @@ class UserRepositoryTest {
         System.out.println(result2);
 
     }
+
+    @Test
+    void embedTest(){
+        userRepository.findAll().forEach(System.out::println);
+
+        User user = new User();
+        user.setName("steve");
+        user.setHomeAddress(new Address("서울시","강남구","강남대로 364 유진빌딩","06241"));
+        user.setCompanyAddress(new Address("안성시","공도","아파트","123456"));
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+        userHistroyRepository.findAll().forEach(System.out::println);
+
+        User user1 = new User();
+        user1.setName("seulgi");
+        user1.setHomeAddress(null);
+        user1.setCompanyAddress(null);
+
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("Porbi");
+        user2.setHomeAddress(new Address());
+        user2.setCompanyAddress(new Address());
+
+        userRepository.save(user2);
+        entityManager.clear(); //영속성 컨텍스트 캐시 제거
+
+        userRepository.findAll().forEach(System.out::println);
+
+        userRepository.findAllRowRecord().forEach(a -> System.out.println(a.values()));
+
+
+
+    }
+
 }

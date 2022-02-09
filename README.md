@@ -21,5 +21,6 @@ velog :
 - [ch04&5](https://velog.io/@yoojinjangjang/P4-1-Ch-0405.-Entity-%EA%B8%B0%EB%B3%B8-Listener-%ED%99%9C%EC%9A%A9) Entity 기본, Listener 활용
 - [ch06](https://velog.io/@yoojinjangjang/P4-1-Ch-06.-%EC%97%B0%EA%B4%80-%EA%B4%80%EA%B3%84) 연관 관계
 - [ch07](https://velog.io/@yoojinjangjang/P4-1-Ch-07.-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8) 영속성 테스트
-- [ch08&9](https://velog.io/@yoojinjangjang/P4-1-Ch089.-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%BF%BC%EC%8A%A4%ED%85%80-%EC%BF%BC%EB%A6%AC) 영속성 전이 & 쿼스텀 쿼리  
+- [ch08&9](https://velog.io/@yoojinjangjang/P4-1-Ch089.-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%BF%BC%EC%8A%A4%ED%85%80-%EC%BF%BC%EB%A6%AC) 영속성 전이 & 쿼스텀 쿼리
+- [ch10&11](https://velog.io/@yoojinjangjang/P4-1Ch01011.-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-JPA-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85) Embedded 타입,JPA 트러블 슈팅  
   jpa 관련 실습 자료를 모아두었으며, chapter별로 학습한 내용을 commit 하였다.

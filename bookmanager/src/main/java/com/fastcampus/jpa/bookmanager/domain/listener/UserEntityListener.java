@@ -33,6 +33,8 @@ public class UserEntityListener { //entity listener에서는 스프링빈을 주
         userHistory.setName(user.getName());
         userHistory.setEmail(user.getEmail());
         userHistory.setUser(user);
+        userHistory.setHomeAddress(user.getHomeAddress());
+        userHistory.setCompanyAddress(user.getCompanyAddress());
 
         userHistroyRepository.save(userHistory);
     }

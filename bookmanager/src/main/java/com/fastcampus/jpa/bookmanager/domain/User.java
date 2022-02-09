@@ -35,13 +35,45 @@ public class User extends BaseEntity { //entity 에는 primary Key 가 꼭 필�
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
+    @Embedded //해당 객체가 embedded 된 객체임을 표시한다.
+    @AttributeOverrides( // 해당 클래스의 각 필드명을 재정의 한다.
+            {
+            @AttributeOverride(name = "city",column = @Column(name="home_city")),
+            //city필드를 home_city 라는 이름으로 재정의
+            //name속성 : 엔티티의 필드명 column속성 : 어노테이션 @Column과 동일
+            @AttributeOverride(name = "district",column = @Column(name="home_district")),
+            @AttributeOverride(name = "detail",column = @Column(name = "home_address_detail")),
+            @AttributeOverride(name = "zipCode",column= @Column(name = "home_zip_code"))
+            }
+    )
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides(
+            {
+                    @AttributeOverride(name = "city",column = @Column(name="company_city")),
+                    @AttributeOverride(name = "district",column = @Column(name="company_district")),
+                    @AttributeOverride(name = "detail",column = @Column(name = "company_address_detail")),
+                    @AttributeOverride(name = "zipCode",column= @Column(name = "company_zip_code"))
+            }
+    )
+    private Address companyAddress;
+
+
+
 
     //관계를 맺을 1측 필드에 @OneToMany와 @JoinColumn 달아주기 --> 1대N관계 : user에 해당하는 userHistory list를 자동 관계를 맺어준다.
     @OneToMany
-    @JoinColumn(name = "user_id",insertable = false,updatable = false) //entity 가 어떤 컬럼으로 조인할지 지정해주는 어노테이션( 관계를 맺을 entity 중 조인 할 컬럼의 이름을 지정해준다. )
+    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    //entity 가 어떤 컬럼으로 조인할지 지정해주는 어노테이션( 관계를 맺을 entity 중 조인 할 컬럼의 이름을 지정해준다. )
     // insertable과 updateable 을 false로 지정하여 user table 에서 해당 필드를 수정하거나 저장하지 못하게 한다.
     @ToString.Exclude
     private List<UserHistory> userHistories = new ArrayList<>(); // 널값 방지 위해 초기화 해준다.
+
+
+
+
+
 
     @OneToMany
     @JoinColumn(name="user_id")
