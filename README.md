@@ -24,3 +24,10 @@ velog :
 - [ch08&9](https://velog.io/@yoojinjangjang/P4-1-Ch089.-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%BF%BC%EC%8A%A4%ED%85%80-%EC%BF%BC%EB%A6%AC) 영속성 전이 & 쿼스텀 쿼리
 - [ch10&11](https://velog.io/@yoojinjangjang/P4-1Ch01011.-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-JPA-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85) Embedded 타입,JPA 트러블 슈팅  
   jpa 관련 실습 자료를 모아두었으며, chapter별로 학습한 내용을 commit 하였다.
+
+## 3. Spring Security study
+
+velog:
+
+- [ch01](https://velog.io/@yoojinjangjang/P4-2-Ch01.-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EC%86%8C%EA%B0%9C) 스프링 시큐리티 소개  
+  security 의 실습 자료와 학습한 내용을 commit 하였다.
